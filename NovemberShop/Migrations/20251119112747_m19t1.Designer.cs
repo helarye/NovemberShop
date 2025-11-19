@@ -11,8 +11,8 @@ using NovemberShop.Data;
 namespace NovemberShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251107162326_m7t1")]
-    partial class m7t1
+    [Migration("20251119112747_m19t1")]
+    partial class m19t1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,12 +35,7 @@ namespace NovemberShop.Migrations
                     b.Property<int>("CastomerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
 
                     b.ToTable("ShoppingCarts");
                 });
@@ -108,17 +103,6 @@ namespace NovemberShop.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("NovemberShop.Models.Cart", b =>
-                {
-                    b.HasOne("NovemberShop.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("NovemberShop.Models.Item", b =>

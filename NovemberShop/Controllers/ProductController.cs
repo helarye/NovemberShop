@@ -30,6 +30,26 @@ namespace NovemberShop.Controllers
             }
             return View(product);
         }
+        // GET: Product/CreatePr
+        [HttpGet]
+        public IActionResult CreatePr()
+        {
+            return View();
+        }
+
+        // POST: Product/CreatePr
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreatePr(Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Products.Add(product);
+                _context.SaveChanges();
+                return RedirectToAction("IndexPr");
+            }
+            return View(product);
+        }
 
         // POST: Product/EditPr/5
         [HttpPost]
@@ -51,6 +71,19 @@ namespace NovemberShop.Controllers
             existingProduct.Price = product.Price;
             existingProduct.ImageUrl = product.ImageUrl;
 
+            _context.SaveChanges();
+            return RedirectToAction("IndexPr");
+        }
+        // GET: Product/DeletePr/5
+        public IActionResult DeletePr(int id)
+        {
+            var product = _context.Products.Find(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            _context.Products.Remove(product);
             _context.SaveChanges();
             return RedirectToAction("IndexPr");
         }

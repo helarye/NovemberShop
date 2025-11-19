@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using NovemberShop.Data;
+using System.Globalization;
 
 namespace NovemberShop
 {
@@ -17,6 +19,16 @@ namespace NovemberShop
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
+            //הכנסת תצוגה (תרבות) עברית שתגרום למחירים להופיע בשקלים
+            // Set culture to Hebrew (Israel)
+            var supportedCultures = new[] { new CultureInfo("he-IL") };
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("he-IL"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
+            //סוף תרבות
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
